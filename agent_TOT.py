@@ -2,7 +2,6 @@ import asyncio
 
 from agents import Agent, Runner
 
-
 # Agent responsible for generating possible solution steps
 generator_agent = Agent(
     name="ToT-Generator",
@@ -38,7 +37,6 @@ async def main():
     print("Problem Statement:")
     print(problem_statement)
 
-
     print("STEP 1 → Generate multiple candidate thoughts")
     print("These represent different possible starting strategies.\n")
 
@@ -56,10 +54,7 @@ async def main():
 
         generation_response = await Runner.run(
             generator_agent,
-            input=(
-                f"Problem:\n{problem_statement}\n\n"
-                "Think of a good first step."
-            ),
+            input=(f"Problem:\n{problem_statement}\n\n" "Think of a good first step."),
         )
 
         generated_thought = generation_response.final_output.strip()
@@ -71,7 +66,6 @@ async def main():
         print("in the reasoning tree.\n")
 
         initial_thoughts.append(generated_thought)
-
 
     # ---------------------------------------------------------
     # STEP 2 — Evaluate each generated thought
@@ -118,10 +112,7 @@ async def main():
 
             expansion_response = await Runner.run(
                 generator_agent,
-                input=(
-                    f"Current idea: {thought}\n"
-                    "Suggest the next logical step."
-                ),
+                input=(f"Current idea: {thought}\n" "Suggest the next logical step."),
             )
 
             expanded_step = expansion_response.final_output.strip()
