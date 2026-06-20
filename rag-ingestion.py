@@ -26,7 +26,7 @@ load_dotenv()
 if __name__ == "__main__":
     print("Ingesting...")
     loader = TextLoader(
-        "C:\\polaris\\code\\agenticai-langchain\\rag-mediumblog.txt", encoding="utf-8"
+        "C:\\polaris\\code\\agentic-ai-langchain\\rag-mediumblog.txt", encoding="utf-8"
     )
 
     document = loader.load()
