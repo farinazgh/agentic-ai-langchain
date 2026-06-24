@@ -1,0 +1,40 @@
+flowchart TD
+    subgraph Config["Configuration"]
+        A[".env file"]
+        B["load_dotenv()"]
+        C["API keys available<br/>OPENAI_API_KEY / TAVILY_API_KEY"]
+        A --> B --> C
+    end
+
+    subgraph Crawl["Crawling Phase"]
+        D["TavilyCrawl"]
+        E["Crawl LangChain docs<br/>https://python.langchain.com/"]
+        F["Raw crawl results<br/>URLs + raw_content"]
+        D --> E --> F
+    end
+
+    subgraph Transform["Document Transformation Phase"]
+        G["Convert each result to<br/>LangChain Document"]
+        H["Document<br/>page_content + metadata source URL"]
+        I["RecursiveCharacterTextSplitter<br/>chunk_size=4000<br/>chunk_overlap=200"]
+        J["Smaller document chunks"]
+        G --> H --> I --> J
+    end
+
+    subgraph Embed["Embedding + Storage Phase"]
+        K["OpenAIEmbeddings<br/>text-embedding-3-small"]
+        L["Vector embeddings"]
+        M["Chroma vector DB<br/>persist_directory=chroma_db"]
+        K --> L --> M
+    end
+
+    subgraph Usage["Later Usage"]
+        N["Semantic search / RAG"]
+        O["Retrieve relevant chunks<br/>for user questions"]
+        N --> O
+    end
+
+    C --> D
+    F --> G
+    J --> K
+    M --> N
